@@ -73,12 +73,37 @@ public class IntContainer {
     }
 
     /**
+     * @return текущий размер списка
+     */
+    public int size() {
+        return currentIndex;
+    }
+
+    /**
      * @return все элементы списка в виде массива
      */
     public int[] toArray() {
         int[] result = new int[currentIndex];
         System.arraycopy(array, 0, result, 0, currentIndex);
         return result;
+    }
+
+    /**
+     * @return все значения списка, разделенные пробелом, как строку
+     */
+    @Override
+    public String toString() {
+        if (currentIndex > 0) {
+            StringBuilder result = new StringBuilder();
+            result.append('[').append(array[0]);
+            for (int i = 1; i < currentIndex; i++) {
+                result.append(", ").append(array[i]);
+            }
+            result.append(']');
+            return result.toString();
+        } else {
+            return "[]";
+        }
     }
 
     /**
