@@ -4,10 +4,19 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Класс для разбора и вычисления математических выражений
+ * Класс для проверки правильности написания, разбора и вычисления математических выражений
+ * Поддерживает однобуквенные переменные, передаваемые в формате Map<String, Double>,
+ * где key - название переменной, value - ее значение
+ * Поддерживает тригонометрические функции cos,sin,tg,ctg
  */
 public class ExpressionParser {
 
+
+    /**
+     * Проверяет, является ли символ математическим оператором
+     * @param ch - проверяемый символ
+     * @return - является ли символ математическим оператором
+     */
     private static boolean isOperator(Character ch) {
         switch(ch) {
             case '+':
@@ -19,6 +28,11 @@ public class ExpressionParser {
         return false;
     }
 
+    /**
+     * Получение приоритета математической операции, 1 - для + и -, 2 - для * и /
+     * @param ch - символ оператора
+     * @return - приоритет оператора
+     */
     private static int getOperatorPriority(Character ch) {
         switch(ch) {
             case '+':
@@ -28,9 +42,16 @@ public class ExpressionParser {
             case '/':
                 return 2;
         }
-        return 0;
+        throw new IllegalArgumentException("Invalid operator: " + ch);
     }
 
+    /**
+     * Применяет математический оператор к паре чисел
+     * @param ch - символ оператора
+     * @param num2 - второе число
+     * @param num1 - первое число
+     * @return - результат математической операции
+     */
     private static double applyOperator(Character ch, double num2, double num1) {
         switch(ch) {
             case '+':
@@ -42,13 +63,13 @@ public class ExpressionParser {
             case '/':
                 return num1 / num2;
         }
-        return 0;
+        throw new IllegalArgumentException("Invalid operator: " + ch);
     }
 
     /**
      * Проверяет правильность записи члена арифметической операции
      * @param member - строковое представление члена арифметической операции
-     * @return
+     * @return - является ли строка правильно записанным членом арифметической операции
      */
     private static boolean isValidMember(String member) {
         try {
@@ -68,10 +89,21 @@ public class ExpressionParser {
         return false;
     }
 
+    /**
+     * @param c - проверямый символ
+     * @return - может ли символ содержаться в члене математической операции
+     */
     private static boolean isMemberContainsChar(char c) {
         return Character.isLetter(c) || Character.isDigit(c) || c == '.';
     }
 
+
+    /**
+     * Функция для пропуска пробелов до первого отличного от пробела символа в передаваемой строке
+     * @param expression - строка для пропуска пробелов
+     * @param i - текущее положение в этой строке
+     * @return - новое положение в строке
+     */
     private static int skipSpaces(String expression, int i) {
         while(i < expression.length() && expression.charAt(i) == ' ') {
             i++;
@@ -79,11 +111,22 @@ public class ExpressionParser {
         return i;
     }
 
+    /**
+     * Проверяет правильность записи математического выражения
+     * @param expression - разбираемое выражение
+     * @return - true, если выражение записано правильно, false - иначе
+     */
     public static boolean isCorrectExpression(String expression) {
         return !expression.isEmpty() &&
                 isCorrectExpression(expression, 0) == expression.length();
     }
 
+    /**
+     * Проверяет правильность записи математического выражения
+     * @param expression - разбираемое выражение
+     * @param i - текущий индекс в разбираемом выражение
+     * @return - индекс, на котором закончился разбор выражения
+     */
     private static int isCorrectExpression(String expression, int i) {
         boolean nextMember = true;
         while(i < expression.length() && expression.charAt(i) != ')') {
@@ -130,6 +173,12 @@ public class ExpressionParser {
         return nextMember ? -1 : i;
     }
 
+    /**
+     * Вычисляет переданное математическое выражение
+     * @param expression - выражение в виде строки
+     * @param variables - переменные, значения которых понадобятся при вычислении выражения
+     * @return - вычисленное значеие выражения
+     */
     public static double parseExpression(String expression, Map<String, Double> variables) {
         if (!isCorrectExpression(expression)) {
             throw new IllegalArgumentException("Expression not correct");
@@ -137,6 +186,21 @@ public class ExpressionParser {
         return parseExpression(expression, variables, 0).value();
     }
 
+    /**
+     * * Проверяет правильность записи математического выражения
+     * Поочередно складывает все числа и операторы в 2 стэка,
+     * когда встречает число, кладет его в стэк,
+     * когда встречает переменную, получается ее значение по названию и кладет значение в стэк,
+     * когда встречает функцию, повторно вызывает parseExpression для выражения этой функции, и кладет результат в стэк,
+     * когда встречает оператор, то кладет его в стэк, предварительно проверяя,
+     * если на вершине стэка лежит оператор такого же или более высокого приоритета,
+     * то берет последние 2 числа и этот оператор, и выполняет арифметическую операцию,
+     * затем кладет полученное число в стэк
+     * @param expression - разбираемое выражение
+     * @param variables - переменные, значения которых понадобятся при вычислении выражения
+     * @param i - текущий индекс в разбираемом выражение
+     * @return - вычисленное значеие выражения
+     */
     private static ResultPair parseExpression(String expression, Map<String, Double> variables, int i) {
         boolean nextMember = true;
         Stack<Double> numbers = new Stack<>();
@@ -194,6 +258,11 @@ public class ExpressionParser {
         return new ResultPair(numbers.pop(), i);
     }
 
+    /**
+     * Пара значений используемая для возврата в функции parseExpression
+     * @param value - значение вычисляемого выражения
+     * @param index - индекс, на котором закончился разбор выражения
+     */
     private record ResultPair(double value, int index) {
     }
 }

@@ -8,6 +8,9 @@ import java.util.Map;
 
 class ExpressionParserTest {
 
+    /**
+     * Проверяет функцию isCorrectExpression - проверка правильности выражения
+     */
     @Test
     void testIsCorrectExpression() {
         Assertions.assertEquals(false, ExpressionParser.isCorrectExpression(""));
@@ -29,6 +32,9 @@ class ExpressionParserTest {
         Assertions.assertEquals(false, ExpressionParser.isCorrectExpression("x - y.y"));
     }
 
+    /**
+     * Проверяет правильность вычисления выражения (без переменных)
+     */
     @Test
     void testParseExpression() {
         Assertions.assertEquals(3.4, ExpressionParser.parseExpression("1 + 2.4", null));
@@ -38,6 +44,9 @@ class ExpressionParserTest {
         Assertions.assertEquals(35.0, ExpressionParser.parseExpression("2 * (1 + 4) + (5 * (2 + 3) + cos(0))", null));
     }
 
+    /**
+     * Проверяет правильность вычисления выражения (с переменными)
+     */
     @Test
     void testParseExpressionWithVariables() {
         Map<String, Double> variables = new HashMap<>();
