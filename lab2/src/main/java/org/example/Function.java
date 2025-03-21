@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Обработчик математических функций
+ */
 public enum Function {
     COS("cos") {
         @Override
@@ -26,8 +29,14 @@ public enum Function {
         }
     };
 
+    /**
+     * Запись ф-ии в математическом выражении
+     */
     private final String name;
 
+    /**
+     * @param name - имя ф-ии
+     */
     private Function(String name) {
         this.name = name;
     }
@@ -36,8 +45,16 @@ public enum Function {
         return name;
     }
 
+    /**
+     * @param x - аргумент ф-ии
+     * @return - значение ф-ии
+     */
     public abstract double calc(double x);
 
+    /**
+     * @param name - имя ф-ии
+     * @return - ф-ию по ее имени
+     */
     public static Function getFunction(String name) {
         for (Function f : values()) {
             if (f.name.equals(name)) {
