@@ -4,8 +4,9 @@ import org.example.model.Person;
 
 import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * Считывает список людей из файла foreign_names.csv и выводит их в консоль
+ */
 public class Main {
     public static void main(String[] args) {
         CsvReader csvReader = new CsvReader();

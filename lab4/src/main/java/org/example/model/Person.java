@@ -1,14 +1,43 @@
 package org.example.model;
 
+/**
+ * Модель человека
+ */
 public class Person {
 
+    /**
+     * ID человека
+     */
     private final int id;
+    /**
+     * Имя
+     */
     private String name;
+    /**
+     * Пол
+     */
     private Gender gender;
+    /**
+     * Отдел, в котором человек работает
+     */
     private Department department;
+    /**
+     * Зарплата
+     */
     private int salary;
-    private String birthday;
+    /**
+     * Дата рождения
+     */
+    private final String birthday;
 
+    /**
+     * @param id - ID человека
+     * @param name - имя
+     * @param gender - пол
+     * @param department - отдел
+     * @param salary - зарплата
+     * @param birthday - дата рождения
+     */
     public Person(int id, String name, Gender gender, Department department, int salary, String birthday) {
         this.id = id;
         this.name = name;
@@ -18,50 +47,79 @@ public class Person {
         this.birthday = birthday;
     }
 
+    /**
+     * @return - ID
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return - имя
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return - пол
+     */
     public Gender getGender() {
         return gender;
     }
 
+    /**
+     * @return - отдел
+     */
     public Department getDepartment() {
         return department;
     }
 
+    /**
+     * @return - зарплата
+     */
     public int getSalary() {
         return salary;
     }
 
+    /**
+     * @return - дата рождения
+     */
     public String getBirthday() {
         return birthday;
     }
 
+    /**
+     * @param name - новое имя
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @param gender - новый пол
+     */
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
+    /**
+     * @param department - новый отдел
+     */
     public void setDepartment(Department department) {
         this.department = department;
     }
 
+    /**
+     * @param salary - новая зарплата
+     */
     public void setSalary(int salary) {
         this.salary = salary;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
+    /**
+     * @return - представление человека в виде строки
+     */
     @Override
     public String toString() {
         return String.format("Person: ID - %d, Name - %s, Gender - %s, Salary - %d, " +

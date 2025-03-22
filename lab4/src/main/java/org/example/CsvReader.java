@@ -18,8 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс для чтения списка Person из файла типы csv
+ */
 public class CsvReader {
 
+    /**
+     * Считывает список Person из файла типа csv
+     * @param csvFilePath - путь к файлу
+     * @return - список Person, считанных из файла
+     */
     public List<Person> readFromFile(String csvFilePath) {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(csvFilePath);
              CSVReader reader = in == null ? null : new CSVReaderBuilder(new InputStreamReader(in, StandardCharsets.UTF_8))
@@ -46,6 +54,12 @@ public class CsvReader {
         return null;
     }
 
+    /**
+     * Конструирует новый экземпляр класса Person из передаваемой строки
+     * @param line - строка, из которой надо создать новый объект
+     * @param departmentMap - Map со всеми уже считанными отделами
+     * @return - новый экземпляр класса Person, сконструированный из заданной строки
+     */
     private Person createPerson(String[] line, Map<String, Department> departmentMap) {
         String departmentName = line[4];
         Department department = departmentMap.get(departmentName);
