@@ -122,8 +122,8 @@ public class Person {
      */
     @Override
     public String toString() {
-        return String.format("Person: ID - %d, Name - %s, Gender - %s, Salary - %d, " +
-                        "Birthday - %s, Department - %s(ID - %d)",
-                id, name, gender.getName(), salary, birthday, department.getName(), department.getId());
+        return String.format("Person [id=%d, name=%s, gender=%s, salary=%d, " +
+                        "birthday=%s, department.id=%d, department.name=%s]",
+                id, name, gender.getName(), salary, birthday, department.getId(), department.getName());
     }
 }

@@ -53,6 +53,6 @@ public class Department {
      */
     @Override
     public String toString() {
-        return String.format("Department: ID - %d, Name - %s", id, name);
+        return String.format("Department [id=%d, name=%s]", id, name);
     }
 }
